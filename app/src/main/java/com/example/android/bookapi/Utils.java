@@ -2,7 +2,6 @@ package com.example.android.bookapi;
 
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -138,38 +137,44 @@ public final class Utils {
             JSONObject baseJsonResponse = new JSONObject(bookJSON);
             JSONArray bookArray = baseJsonResponse.getJSONArray("items");
 
+            if (baseJsonResponse.has("items")) {
+                //parse here
+                for (int i = 0; i < bookArray.length(); i++) {
 
-            //parse here
-            for (int i = 0; i < bookArray.length(); i++) {
+                    JSONObject currentBook = bookArray.getJSONObject(i);
+                    JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
+                    JSONArray authorArray = volumeInfo.optJSONArray("authors");
+                    JSONArray categoriesArray = volumeInfo.optJSONArray("categories");
 
-                JSONObject currentBook = bookArray.getJSONObject(i);
-                JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
-                JSONArray authorArray = volumeInfo.optJSONArray("authors");
-                JSONArray categoriesArray = volumeInfo.optJSONArray("categories");
+                    String author = "";
+                    String category = "";
 
-                String author = "";
-                String category = "";
-
-                if(volumeInfo.has("authors")){
-                    for (int j = 0; j < authorArray.length(); j++) {
-                        author += authorArray.getString(j);
+                    if (volumeInfo.has("authors")) {
+                        for (int j = 0; j < authorArray.length(); j++) {
+                            author += authorArray.getString(j);
+                        }
                     }
-                }
-                if(volumeInfo.has("categories")) {
-                    for (int k = 0; k < categoriesArray.length(); k++) {
-                        category += categoriesArray.getString(k);
+                    if (volumeInfo.has("categories")) {
+                        for (int k = 0; k < categoriesArray.length(); k++) {
+                            category += categoriesArray.getString(k);
+                        }
                     }
+                    String title = "";
+                    if (volumeInfo.has("title")) {
+                        title = volumeInfo.getString("title");
+                    }
+
+                    Integer pageCount = 0;
+                    if (volumeInfo.has("title")) {
+                        pageCount = volumeInfo.getInt("pageCount");
+                    }
+
+                    Book book = new Book(author, title, category, pageCount);
+
+                    books.add(book);
+                    Log.v(LOG_TAG, "book added" + book.toString());
                 }
-
-                String title = volumeInfo.getString("title");
-                Integer pageCount = volumeInfo.getInt("pageCount");
-
-                Book book = new Book(author, title, category, pageCount);
-
-                books.add(book);
-                Log.v(LOG_TAG, "book added" + book.toString());
             }
-
 
 
         } catch (JSONException e) {

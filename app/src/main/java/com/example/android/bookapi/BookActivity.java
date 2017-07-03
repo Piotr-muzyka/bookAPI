@@ -20,18 +20,12 @@ import java.util.List;
 
 public class BookActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>> {
 
-    EditText userInput;
-    boolean userInputSet;
-
     private static final String LOG_TAG = BookActivity.class.getName();
-    private static final String BOOK_API_URL =
-            "https://www.googleapis.com/books/v1/volumes";
+    private static final String BOOK_API_URL = "https://www.googleapis.com/books/v1/volumes";
     private static final int BOOK_LOADER_ID = 1;
+    EditText userInput;
     private BookAdapter mAdapter;
     private TextView mEmptyStateTextView;
-
-    public static Context context;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +44,17 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
         queryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLoaderManager().restartLoader(BOOK_LOADER_ID, null, BookActivity.this);
+                ConnectivityManager connMgr2 = (ConnectivityManager)
+                        getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo2 = connMgr2.getActiveNetworkInfo();
+                if (networkInfo2 != null && networkInfo2.isConnected()) {
+                    getLoaderManager().restartLoader(BOOK_LOADER_ID, null, BookActivity.this);
+                } else {
+                    Log.v(LOG_TAG, "error");
+                    View loadingIndicator = findViewById(R.id.loading_indicator);
+                    loadingIndicator.setVisibility(View.GONE);
+                    mEmptyStateTextView.setText(R.string.no_internet_connection);
+                }
             }
         });
 
@@ -60,7 +64,6 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-            Log.v(LOG_TAG, "works");
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(BOOK_LOADER_ID, null, this);
         } else {
@@ -73,9 +76,6 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle bundle) {
-
-//        EditText mEdit   = (EditText)findViewById(R.id.userInput);
-//        String input = mEdit.getText().toString();
 
         userInput = (EditText) findViewById(R.id.userInput);
         String input = userInput.getText().toString();
