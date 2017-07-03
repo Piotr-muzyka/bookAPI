@@ -135,9 +135,9 @@ public final class Utils {
         try {
 
             JSONObject baseJsonResponse = new JSONObject(bookJSON);
-            JSONArray bookArray = baseJsonResponse.getJSONArray("items");
-
             if (baseJsonResponse.has("items")) {
+
+                JSONArray bookArray = baseJsonResponse.getJSONArray("items");
                 //parse here
                 for (int i = 0; i < bookArray.length(); i++) {
 
