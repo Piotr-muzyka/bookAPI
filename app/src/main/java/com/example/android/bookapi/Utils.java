@@ -136,18 +136,28 @@ public final class Utils {
             for (int i = 0; i < bookArray.length(); i++) {
 
                 JSONObject currentBook = bookArray.getJSONObject(i);
-                JSONObject properties = currentBook.getJSONObject("volumeInfo");
+                JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
+                JSONArray authorArray = volumeInfo.getJSONArray("authors");
+                JSONArray categoriesArray = volumeInfo.getJSONArray("categories");
 
-                //String author = properties.getString("author");
-                String author = "author";
-                String title = properties.getString("title");
-                //String category = properties.getString("categories");
-                String category = "categories";
-                Integer pageCount = properties.getInt("pageCount");
+                String author = "";
+
+                for (int j = 0; j < authorArray.length(); j++) {
+                    author += authorArray.getString(j);
+                }
+
+                String category = "";
+                for (int k = 0; k < categoriesArray.length(); k++) {
+                    category += categoriesArray.getString(k);
+                }
+
+                String title = volumeInfo.getString("title");
+                Integer pageCount = volumeInfo.getInt("pageCount");
 
                 Book book = new Book(author, title, category, pageCount);
 
                 books.add(book);
+                Log.v(LOG_TAG,"book added"+ book.toString());
             }
 
         } catch (JSONException e) {

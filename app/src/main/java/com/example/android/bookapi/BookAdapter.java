@@ -41,7 +41,9 @@ public class BookAdapter extends ArrayAdapter<Book> {
         categoryView.setText(currentBook.getmCategory());
 
         TextView pageView = (TextView) listItemView.findViewById(R.id.pageCount);
-        pageView.setText(currentBook.getmPageCount());
+        Integer pages = currentBook.getmPageCount();
+        String pagecount = pages.toString();
+        pageView.setText(pagecount);
 
         return listItemView;
     }

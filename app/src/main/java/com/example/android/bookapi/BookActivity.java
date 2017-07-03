@@ -40,7 +40,6 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter = new BookAdapter(this, new ArrayList<Book>());
         bookListView.setAdapter(mAdapter);
 
-
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
 

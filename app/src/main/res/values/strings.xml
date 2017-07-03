@@ -2,7 +2,7 @@
     <string name="app_name">BookAPI</string>
 
     <!-- Text to display in the list when there are no earthquakes [CHAR LIMIT=NONE] -->
-    <string name="no_books">No earthquakes found.</string>
+    <string name="no_books">No books found.</string>
 
     <!-- Error message when there is no internet connectivity [CHAR LIMIT=NONE] -->
     <string name="no_internet_connection">No internet connection.</string>
