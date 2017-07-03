@@ -165,7 +165,7 @@ public final class Utils {
                     }
 
                     Integer pageCount = 0;
-                    if (volumeInfo.has("title")) {
+                    if (volumeInfo.has("pageCount")) {
                         pageCount = volumeInfo.getInt("pageCount");
                     }
 
