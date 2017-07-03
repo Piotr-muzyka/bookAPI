@@ -137,16 +137,16 @@ public final class Utils {
 
                 JSONObject currentBook = bookArray.getJSONObject(i);
                 JSONObject volumeInfo = currentBook.getJSONObject("volumeInfo");
-                JSONArray authorArray = volumeInfo.getJSONArray("authors");
-                JSONArray categoriesArray = volumeInfo.getJSONArray("categories");
+                JSONArray authorArray = volumeInfo.optJSONArray("authors");
+                JSONArray categoriesArray = volumeInfo.optJSONArray("categories");
 
-                String author = "";
+                String author = "author unknown";
 
                 for (int j = 0; j < authorArray.length(); j++) {
                     author += authorArray.getString(j);
                 }
 
-                String category = "";
+                String category = "category unknown";
                 for (int k = 0; k < categoriesArray.length(); k++) {
                     category += categoriesArray.getString(k);
                 }

@@ -10,5 +10,6 @@
     <string name="dummy_category">novels</string>
     <string name="dummy_title">Stories of Sherlock Holmes</string>
     <string name="dummy_author">Arthur Conan Doyle</string>
+    <string name="menu_refresh">refresh</string>
 
 </resources>
