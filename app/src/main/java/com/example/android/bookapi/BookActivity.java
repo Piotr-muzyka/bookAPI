@@ -30,22 +30,13 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
     private BookAdapter mAdapter;
     private TextView mEmptyStateTextView;
 
+    public static Context context;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_activity);
-
-        userInput = (EditText) findViewById(R.id.userInput);
-        Button queryButton = (Button) findViewById(R.id.queryButton);
-
-        queryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userInputSet=true;
-                Boolean user2 = userInputSet;
-                Log.v(LOG_TAG, user2.toString());
-            }
-        });
 
         ListView bookListView = (ListView) findViewById(R.id.list);
 
@@ -55,12 +46,20 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter = new BookAdapter(this, new ArrayList<Book>());
         bookListView.setAdapter(mAdapter);
 
+        Button queryButton = (Button) findViewById(R.id.queryButton);
+        queryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getLoaderManager().restartLoader(BOOK_LOADER_ID, null, BookActivity.this);
+            }
+        });
+
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        if (networkInfo != null && networkInfo.isConnected() && userInputSet==true) {
+        if (networkInfo != null && networkInfo.isConnected()) {
             Log.v(LOG_TAG, "works");
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(BOOK_LOADER_ID, null, this);
@@ -75,9 +74,11 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle bundle) {
 
-        EditText mEdit   = (EditText)findViewById(R.id.userInput);
-        String input = mEdit.getText().toString();
-//        String builtUrl = BOOK_API_URL  + input;
+//        EditText mEdit   = (EditText)findViewById(R.id.userInput);
+//        String input = mEdit.getText().toString();
+
+        userInput = (EditText) findViewById(R.id.userInput);
+        String input = userInput.getText().toString();
 
         Uri baseUri = Uri.parse(BOOK_API_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();

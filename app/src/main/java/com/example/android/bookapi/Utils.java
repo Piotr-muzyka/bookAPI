@@ -2,6 +2,7 @@ package com.example.android.bookapi;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +25,9 @@ import java.util.List;
 
 public final class Utils {
 
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     private static final String LOG_TAG = Utils.class.getSimpleName();
 
     /**
@@ -121,6 +124,8 @@ public final class Utils {
     }
 
     private static List<Book> extractFeatureFromJson(String bookJSON) {
+
+
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(bookJSON)) {
             return null;
@@ -133,6 +138,8 @@ public final class Utils {
             JSONObject baseJsonResponse = new JSONObject(bookJSON);
             JSONArray bookArray = baseJsonResponse.getJSONArray("items");
 
+
+            //parse here
             for (int i = 0; i < bookArray.length(); i++) {
 
                 JSONObject currentBook = bookArray.getJSONObject(i);
@@ -140,15 +147,18 @@ public final class Utils {
                 JSONArray authorArray = volumeInfo.optJSONArray("authors");
                 JSONArray categoriesArray = volumeInfo.optJSONArray("categories");
 
-                String author = "author unknown";
+                String author = "";
+                String category = "";
 
-                for (int j = 0; j < authorArray.length(); j++) {
-                    author += authorArray.getString(j);
+                if(volumeInfo.has("authors")){
+                    for (int j = 0; j < authorArray.length(); j++) {
+                        author += authorArray.getString(j);
+                    }
                 }
-
-                String category = "category unknown";
-                for (int k = 0; k < categoriesArray.length(); k++) {
-                    category += categoriesArray.getString(k);
+                if(volumeInfo.has("categories")) {
+                    for (int k = 0; k < categoriesArray.length(); k++) {
+                        category += categoriesArray.getString(k);
+                    }
                 }
 
                 String title = volumeInfo.getString("title");
@@ -157,8 +167,10 @@ public final class Utils {
                 Book book = new Book(author, title, category, pageCount);
 
                 books.add(book);
-                Log.v(LOG_TAG,"book added"+ book.toString());
+                Log.v(LOG_TAG, "book added" + book.toString());
             }
+
+
 
         } catch (JSONException e) {
             Log.e("Utils", "Problem parsing the JSON results", e);
