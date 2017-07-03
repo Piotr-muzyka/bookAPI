@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="listViewDividerHeight">4dp</dimen>
+    <dimen name="layoutPadding">16dp</dimen>
+    <dimen name="layoutPaddingEnd">16dp</dimen>
+    <dimen name="layoutPaddingLeft">16dp</dimen>
+    <dimen name="layoutPaddingRight">16dp</dimen>
+    <dimen name="layoutPaddingStart">16dp</dimen>
+    <dimen name="textViewSize1">12sp</dimen>
+    <dimen name="textViewSize2">16sp</dimen>
+    <dimen name="textViewPadding">4dp</dimen>
+</resources>

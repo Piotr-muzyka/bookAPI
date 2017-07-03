@@ -5,10 +5,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingEnd="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingStart="16dp">
+    android:paddingEnd="@dimen/layoutPaddingEnd"
+    android:paddingLeft="@dimen/layoutPaddingLeft"
+    android:paddingRight="@dimen/layoutPaddingRight"
+    android:paddingStart="@dimen/layoutPaddingStart">
 
     <TextView
         android:id="@+id/author"
@@ -20,8 +20,9 @@
         android:maxLines="1"
         android:textAllCaps="true"
         android:textColor="@color/textColorBookDetails"
-        android:textSize="12sp"
-        tools:text="Arthur Conan Doyle" />
+        android:textSize="@dimen/textViewSize1"
+        tools:text="@string/dummy_author"
+        android:padding="@dimen/textViewPadding"/>
 
     <TextView
         android:id="@+id/title"
@@ -31,8 +32,9 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/textColorBookDetails"
-        android:textSize="16sp"
-        tools:text="Stories of Sherlock Holmes" />
+        android:textSize="@dimen/textViewSize2"
+        tools:text="@string/dummy_title"
+        android:padding="@dimen/textViewPadding"/>
 
     <TextView
         android:id="@+id/category"
@@ -41,8 +43,9 @@
         android:layout_gravity="end"
         android:layout_weight="1"
         android:textColor="@color/textColorBookDetails"
-        android:textSize="12sp"
-        tools:text="novels" />
+        android:textSize="@dimen/textViewSize1"
+        tools:text="@string/dummy_category"
+        android:padding="@dimen/textViewPadding"/>
 
     <TextView
         android:id="@+id/pageCount"
@@ -51,7 +54,8 @@
         android:layout_gravity="end"
         android:layout_weight="1"
         android:textColor="@color/textColorBookDetails"
-        android:textSize="12sp"
-        tools:text="406" />
+        android:textSize="@dimen/textViewSize1"
+        tools:text="@string/dummy_pageCount"
+        android:padding="@dimen/textViewPadding"/>
 
 </LinearLayout>
