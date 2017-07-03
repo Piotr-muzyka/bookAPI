@@ -14,9 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.data;
 
 public class BookActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>> {
 
@@ -44,13 +47,15 @@ public class BookActivity extends AppCompatActivity implements LoaderManager.Loa
         queryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ConnectivityManager connMgr2 = (ConnectivityManager)
                         getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo2 = connMgr2.getActiveNetworkInfo();
                 if (networkInfo2 != null && networkInfo2.isConnected()) {
                     getLoaderManager().restartLoader(BOOK_LOADER_ID, null, BookActivity.this);
                 } else {
-                    Log.v(LOG_TAG, "error");
+                    setContentView(R.layout.book_activity);
+                    Log.v(LOG_TAG, "error2");
                     View loadingIndicator = findViewById(R.id.loading_indicator);
                     loadingIndicator.setVisibility(View.GONE);
                     mEmptyStateTextView.setText(R.string.no_internet_connection);
